@@ -32,7 +32,7 @@ jobs:
           sed -i "s/%GROUP%/$GROUP/g" .github/template-cleanup/*
 
           # Replace template package name in project files with $GROUP
-          find src -type f -exec sed -i "s/io.github.hqnkuh.template/$GROUP/g" {} +
+          find src -type f -exec sed -i "s/jp.sailuna.template/$GROUP/g" {} +
           find src -type f -exec sed -i "s/PaperPluginTemplate/$NAME/g" {} +
           find src -type f -exec sed -i "s/hqnkuh/$ACTOR/g" {} +
 
@@ -40,19 +40,18 @@ jobs:
           mkdir -p src/main/kotlin/${GROUP//.//}
           mkdir -p src/test/kotlin/${GROUP//.//}
           cp -R .github/template-cleanup/. .
-          cp -R src/main/kotlin/io/github/hqnkuh/template/* src/main/kotlin/${GROUP//.//}/
-          cp -R src/test/kotlin/io/github/hqnkuh/template/* src/test/kotlin/${GROUP//.//}/
+          cp -R src/main/kotlin/jp/sailuna/template/* src/main/kotlin/${GROUP//.//}/
+          cp -R src/test/kotlin/jp/sailuna/template/* src/test/kotlin/${GROUP//.//}/
 
           # Cleanup
           rm -rf \
             .github/template-cleanup \
             .github/workflows/template-cleanup.yml \
             .github/workflows/template-verify.yml \
-            src/main/kotlin/io \
-            src/test/kotlin/io \
+            src/main/kotlin/jp \
+            src/test/kotlin/jp \
             LICENSE
 
-      # Commit modified files
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
