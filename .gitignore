@@ -1,0 +1,11 @@
+/*
+
+!/.github/
+!/gradle/
+!/src/
+
+!/.editorconfig
+!/.git*
+!/gradle*
+!/*.gradle.kts
+!/*.md

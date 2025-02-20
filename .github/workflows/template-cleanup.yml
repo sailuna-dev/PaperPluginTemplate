@@ -1,0 +1,68 @@
+name: Template Cleanup
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  template-cleanup:
+    name: Template Cleanup
+    runs-on: ubuntu-latest
+    if: github.event.repository.name != 'PaperPluginTemplate'
+    permissions:
+      contents: write
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+      - name: Cleanup
+        run: |
+          export LC_CTYPE=C
+          export LANG=C
+
+          # Prepare variables
+          NAME="${GITHUB_REPOSITORY##*/}"
+          ACTOR=$(echo $GITHUB_ACTOR | tr '[:upper:]' '[:lower:]')
+          SAFE_NAME=$(echo $NAME | sed 's/[^a-zA-Z0-9]//g' | tr '[:upper:]' '[:lower:]')
+          SAFE_ACTOR=$(echo $ACTOR | sed 's/[^a-zA-Z0-9]//g' | tr '[:upper:]' '[:lower:]')
+          GROUP="com.github.$SAFE_ACTOR.$SAFE_NAME"
+
+          # Replace placeholders in the template-cleanup files
+          sed -i "s/%NAME%/$NAME/g" .github/template-cleanup/*
+          sed -i "s/%REPOSITORY%/${GITHUB_REPOSITORY/\//\\/}/g" .github/template-cleanup/*
+          sed -i "s/%GROUP%/$GROUP/g" .github/template-cleanup/*
+
+          # Replace template package name in project files with $GROUP
+          find src -type f -exec sed -i "s/io.github.hqnkuh.template/$GROUP/g" {} +
+          find src -type f -exec sed -i "s/PaperPluginTemplate/$NAME/g" {} +
+          find src -type f -exec sed -i "s/hqnkuh/$ACTOR/g" {} +
+
+          # Move content
+          mkdir -p src/main/kotlin/${GROUP//.//}
+          mkdir -p src/test/kotlin/${GROUP//.//}
+          cp -R .github/template-cleanup/. .
+          cp -R src/main/kotlin/io/github/hqnkuh/template/* src/main/kotlin/${GROUP//.//}/
+          cp -R src/test/kotlin/io/github/hqnkuh/template/* src/test/kotlin/${GROUP//.//}/
+
+          # Cleanup
+          rm -rf \
+            .github/template-cleanup \
+            .github/workflows/template-cleanup.yml \
+            .github/workflows/template-verify.yml \
+            src/main/kotlin/io \
+            src/test/kotlin/io \
+            LICENSE
+
+      # Commit modified files
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Template cleanup"
+
+      # Push changes
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}

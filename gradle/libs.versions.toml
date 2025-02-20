@@ -1,0 +1,16 @@
+[versions]
+kotlin = "2.1.10"
+shadow = "9.0.0-beta8"
+resourceFactory = "1.2.0"
+runTask = "2.3.1"
+paperApi = "1.21.4-R0.1-SNAPSHOT"
+
+[plugins]
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
+resourceFactory-bukkit = { id = "xyz.jpenilla.resource-factory-bukkit-convention", version.ref = "resourceFactory" }
+resourceFactory-paper = { id = "xyz.jpenilla.resource-factory-paper-convention", version.ref = "resourceFactory" }
+runPaper = { id = "xyz.jpenilla.run-paper", version.ref = "runTask" }
+
+[libraries]
+paperApi = { module = "io.papermc.paper:paper-api", version.ref = "paperApi" }
