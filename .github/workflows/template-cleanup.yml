@@ -45,6 +45,7 @@ jobs:
 
           # Cleanup
           rm -rf \
+            .github/readme \
             .github/template-cleanup \
             .github/workflows/template-cleanup.yml \
             .github/workflows/template-verify.yml \

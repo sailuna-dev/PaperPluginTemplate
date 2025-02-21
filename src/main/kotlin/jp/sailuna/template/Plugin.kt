@@ -1,4 +1,4 @@
-package io.github.hqnkuh.template
+package jp.sailuna.template
 
 import org.bukkit.plugin.java.JavaPlugin
 
