@@ -27,7 +27,7 @@ dependencies {
 }
 
 bukkitPluginYaml {
-    main = providers.gradleProperty("pluginGroup").get() + "." + providers.gradleProperty("pluginName").get()
+    main = providers.gradleProperty("pluginGroup").get() + ".Plugin"
     apiVersion = providers.gradleProperty("minecraftVersion").get()
 }
 
