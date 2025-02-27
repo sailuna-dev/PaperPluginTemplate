@@ -44,10 +44,6 @@ tasks {
         filteringCharset = Charsets.UTF_8.name()
     }
 
-    wrapper {
-        gradleVersion = providers.gradleProperty("gradleVersion").get()
-    }
-
     shadowJar {
         archiveClassifier.set("")
     }
