@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.1.10"
-shadow = "9.0.0-beta10"
+shadow = "9.0.0-beta11"
 resourceFactory = "1.2.0"
 runTask = "2.3.1"
 paperApi = "1.21.4-R0.1-SNAPSHOT"
